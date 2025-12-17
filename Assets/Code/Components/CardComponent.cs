@@ -10,7 +10,7 @@ namespace Assets.Code.Components
     {
         public string Path;
         [HideInInspector] public SpriteRenderer SpriteRenderer;
-        [SerializeField] private List<Sprite> Sprites;
+        private List<Sprite> Sprites;
         private bool prepared;
         
         private int index;
@@ -24,9 +24,7 @@ namespace Assets.Code.Components
 
         public int Size => Sprites.Count;
 
-        public bool Worked;
-
-        public int UsedSpriteIndex;
+        [HideInInspector] public int UsedSpriteIndex;
 
         public UniTask<bool> Prepare()
         {

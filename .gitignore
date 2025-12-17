@@ -90,3 +90,8 @@ crashlytics-build.properties
 /key
 /builds
 /ProjectSettings/
+/hooks
+/info
+/description
+/config
+/HEAD

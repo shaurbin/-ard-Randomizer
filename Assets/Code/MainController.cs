@@ -13,7 +13,7 @@ public class MainController : MonoBehaviour
     public Card Card;
 
     [Button]
-    public void Run()
+    public void RecordShuffles()
     {
         if (Card == null)
         {
@@ -55,10 +55,33 @@ public class MainController : MonoBehaviour
                 if (Card.UniqueView())
                 {
                     await Record();
-                    await UniTask.Delay(500);
+                    await UniTask.Delay(1000);
                 }
             }
         }
+    }
+
+    [Button]
+    public async void RecordThisConfiguration()
+    {
+        var settings = new RecorderControllerSettings();
+        settings.FrameRate = 60;
+        var movie = new MovieRecorderSettings();
+        movie.FrameRate = 60;
+        movie.EncodingQuality = MovieRecorderSettings.VideoEncodingQuality.High;
+
+        var imageInputSettings = new RenderTextureInputSettings
+        {
+            RenderTexture = renderTexture
+        };
+
+        movie.ImageInputSettings = imageInputSettings;
+
+        recorderController = new RecorderController(settings);
+        recorderController.Settings.AddRecorderSettings(movie);
+
+        await Record();
+        await UniTask.Delay(1000);
     }
 
     private async UniTask<bool> Record()

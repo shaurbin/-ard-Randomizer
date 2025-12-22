@@ -221,7 +221,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ATW/Sprites/Boards
   SpriteRenderer: {fileID: 0}
-  Sprites: []
+  UsedSpriteIndex: 0
+  dependents: []
 --- !u!1 &25044596
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ATW/Sprites/Secondary B
   SpriteRenderer: {fileID: 0}
-  Sprites: []
+  UsedSpriteIndex: 0
+  dependents: []
 --- !u!1 &80674057
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,7 +507,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ATW/Sprites/Splash
   SpriteRenderer: {fileID: 0}
-  Sprites: []
+  UsedSpriteIndex: 0
+  dependents: []
 --- !u!1 &414831404
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,7 +659,6 @@ GameObject:
   - component: {fileID: 713087189}
   - component: {fileID: 713087190}
   - component: {fileID: 713087191}
-  - component: {fileID: 713087192}
   m_Layer: 0
   m_Name: Shadow_001
   m_TagString: Untagged
@@ -731,7 +733,7 @@ SpriteRenderer:
   m_Size: {x: 6.79, y: 6.84}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &713087191
@@ -756,21 +758,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &713087192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 713087188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a2075ee6098d7145aead9fb8371eac2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Path: ATW/Sprites/Shadow
-  SpriteRenderer: {fileID: 0}
-  Sprites: []
 --- !u!1 &1087885729
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,7 +805,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ATW/Sprites/Central
   SpriteRenderer: {fileID: 0}
-  Sprites: []
+  UsedSpriteIndex: 0
+  dependents:
+  - Index: 0
+    UsedIndex: 0
+    SpriteRenderer: {fileID: 713087190}
+    Key: Shadows
+  - Index: 0
+    UsedIndex: 0
+    SpriteRenderer: {fileID: 2104799464}
+    Key: Headers
 --- !u!212 &1087885732
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -903,6 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a552a3bcb2c791040a02db7b2feaf06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Components: []
   Prepared: 0
 --- !u!4 &1238490982
 Transform:
@@ -1084,7 +1081,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ATW/Sprites/Frames
   SpriteRenderer: {fileID: 0}
-  Sprites: []
+  UsedSpriteIndex: 0
+  dependents: []
 --- !u!1 &1923855847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,7 +1185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ATW/Sprites/Secondary A
   SpriteRenderer: {fileID: 0}
-  Sprites: []
+  UsedSpriteIndex: 0
+  dependents: []
 --- !u!1 &1935358772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,7 +1335,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2104799463}
   - component: {fileID: 2104799464}
-  - component: {fileID: 2104799465}
   m_Layer: 0
   m_Name: Header_Thai_001
   m_TagString: Untagged
@@ -1414,21 +1412,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2104799465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2104799462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a2075ee6098d7145aead9fb8371eac2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Path: ATW/Sprites/Header
-  SpriteRenderer: {fileID: 0}
-  Sprites: []
 --- !u!1 &2136648423
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,7 +1514,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: ATW/Sprites/Secondary C
   SpriteRenderer: {fileID: 0}
-  Sprites: []
+  UsedSpriteIndex: 0
+  dependents: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

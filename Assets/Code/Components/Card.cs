@@ -26,17 +26,28 @@ namespace Assets.Code.Components
             Prepared = true;
         }
 
-        public bool UniqueView()
+        public string Hash()
         {
             StringBuilder sb = new StringBuilder();
             foreach (var component in Components)
             {
                 int arg = component.UsedSpriteIndex;
                 sb.Append(arg.ToString());
+                if (component.Dependents.Count > 0)
+                {
+                    sb.Append(component.DependentsIndexes());
+                }
             }
 
             //Debug.Log(sb.ToString());
             var hash = sb.ToString();
+
+            return hash;
+        }
+
+        public bool UniqueView()
+        {
+            var hash = Hash();   
             
             if (Hashes.ContainsKey(hash))
                 return false;

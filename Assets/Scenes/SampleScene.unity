@@ -219,12 +219,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2075ee6098d7145aead9fb8371eac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: 2
   Path: ATW/Sprites/Boards
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
   dependents: []
-  UseOnly:
-  - {fileID: 21300000, guid: d7998a08de7cb0b4096e7bdc63e85813, type: 3}
+  UseOnly: []
+  LimitForCount: 0
+  Order: 0
 --- !u!1 &25044596
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,11 +327,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2075ee6098d7145aead9fb8371eac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: 4
   Path: ATW/Sprites/Secondary B
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
   dependents: []
   UseOnly: []
+  LimitForCount: 0
+  Order: 0
 --- !u!1 &80674057
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2075ee6098d7145aead9fb8371eac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: 0
   Path: ATW/Sprites/Central
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
@@ -799,8 +805,9 @@ MonoBehaviour:
     Path: ATW/Sprites/Splash
   - SpriteRenderer: {fileID: 2104799464}
     Path: ATW/Sprites/Headers
-  UseOnly:
-  - {fileID: 21300000, guid: e44ca69afb3f62a4c98339c8ff4526a5, type: 3}
+  UseOnly: []
+  LimitForCount: 0
+  Order: 0
 --- !u!212 &1087885732
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1065,11 +1072,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2075ee6098d7145aead9fb8371eac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: 1
   Path: ATW/Sprites/Frames
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
   dependents: []
   UseOnly: []
+  LimitForCount: 0
+  Order: 0
 --- !u!1 &1923855847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,11 +1180,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2075ee6098d7145aead9fb8371eac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: 3
   Path: ATW/Sprites/Secondary A
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
   dependents: []
   UseOnly: []
+  LimitForCount: 0
+  Order: 0
 --- !u!1 &1935358772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,11 +1513,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2075ee6098d7145aead9fb8371eac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: 5
   Path: ATW/Sprites/Secondary C
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
   dependents: []
   UseOnly: []
+  LimitForCount: 0
+  Order: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

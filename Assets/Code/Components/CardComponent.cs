@@ -11,6 +11,8 @@ namespace Assets.Code.Components
     [RequireComponent(typeof(SpriteRenderer))]
     public class CardComponent : MonoBehaviour
     {
+        [ReadOnly] public int Id;
+
         public string Path;
         [HideInInspector] public SpriteRenderer SpriteRenderer;
         public List<SpriteWrapper> Sprites;
@@ -33,10 +35,12 @@ namespace Assets.Code.Components
 
         public List<DependentElements> Dependents => dependents;
 
-        //private Dictionary<string, List<SpriteWrapper>> sp = new Dictionary<string, List<SpriteWrapper>>();
-
         public List<Sprite> UseOnly = new List<Sprite>();
         private List<string> UseOnlyNames = new List<string>();
+
+        public int LimitForCount;
+
+        public int Order;
 
         [Button]
         public void ClearUseOnly()
@@ -46,6 +50,63 @@ namespace Assets.Code.Components
         }
 
         public UniTask<bool> Prepare()
+        {
+            if (UseOnly.Count > 0)
+                PrepareWithUseOnly();
+            else if (LimitForCount > 0)
+                PrepareWithLimit();
+            else
+                PrepareWithUseOnly();
+
+            if (dependents.Count > 0)
+            {
+                foreach (var dependent in dependents)
+                {
+                    var dependentSpriteObjs = Resources.LoadAll(dependent.Path, typeof(Sprite));
+                    foreach (var dso in dependentSpriteObjs)
+                    {
+                        var dpath = AssetDatabase.GetAssetPath(dso);
+                        FileName dfile = new FileName(dpath);
+                        dependent.Sprites.Add(dfile.Number, new()
+                        {
+                            FileName = dfile,
+                            Sprite = (Sprite)dso
+                        });
+                    }
+                }
+            }
+
+            prepared = true;
+
+            return UniTask.FromResult(true);
+        }
+
+        private void PrepareWithLimit()
+        {
+            SpriteRenderer = GetComponent<SpriteRenderer>();
+            var items = Resources.LoadAll(Path, typeof(Sprite));
+            Sprites = new List<SpriteWrapper>();
+
+            int counter = 0;
+            foreach (var item in items)
+            {
+                var path = AssetDatabase.GetAssetPath(item);
+                FileName file = new FileName(path);
+
+                Sprites.Add(new()
+                {
+                    FileName = file,
+                    Sprite = (Sprite)item
+                });
+
+                counter++;
+
+                if (counter == LimitForCount)
+                    break;
+            }
+        }
+
+        private void PrepareWithUseOnly()
         {
             SpriteRenderer = GetComponent<SpriteRenderer>();
             var items = Resources.LoadAll(Path, typeof(Sprite));
@@ -75,28 +136,6 @@ namespace Assets.Code.Components
                     Sprite = (Sprite)item
                 });
             }
-
-            if (dependents.Count > 0)
-            {
-                foreach (var dependent in dependents)
-                {
-                    var dependentSpriteObjs = Resources.LoadAll(dependent.Path, typeof(Sprite));
-                    foreach (var dso in dependentSpriteObjs)
-                    {
-                        var dpath = AssetDatabase.GetAssetPath(dso);
-                        FileName dfile = new FileName(dpath);
-                        dependent.Sprites.Add(dfile.Number, new()
-                        {
-                            FileName = dfile,
-                            Sprite = (Sprite)dso
-                        });
-                    }
-                }
-            }
-
-            prepared = true;
-
-            return UniTask.FromResult(true);
         }
 
         public void Refresh()
@@ -104,19 +143,6 @@ namespace Assets.Code.Components
             index = 0;
             UsedSpriteIndex = 0;
         }
-
-        //public bool NextSprite()
-        //{
-        //    if (finished) return false;
-
-        //    if (index > 0) UsedSpriteIndex++;
-
-        //    index++;
-        //    if (index >= Sprites.Count)
-        //        finished = true;
-            
-        //    return true;
-        //}
 
         public void Build()
         {

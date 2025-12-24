@@ -223,6 +223,8 @@ MonoBehaviour:
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
   dependents: []
+  UseOnly:
+  - {fileID: 21300000, guid: d7998a08de7cb0b4096e7bdc63e85813, type: 3}
 --- !u!1 &25044596
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,6 +329,7 @@ MonoBehaviour:
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
   dependents: []
+  UseOnly: []
 --- !u!1 &80674057
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,6 +799,8 @@ MonoBehaviour:
     Path: ATW/Sprites/Splash
   - SpriteRenderer: {fileID: 2104799464}
     Path: ATW/Sprites/Headers
+  UseOnly:
+  - {fileID: 21300000, guid: e44ca69afb3f62a4c98339c8ff4526a5, type: 3}
 --- !u!212 &1087885732
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1064,6 +1069,7 @@ MonoBehaviour:
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
   dependents: []
+  UseOnly: []
 --- !u!1 &1923855847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1168,6 +1174,7 @@ MonoBehaviour:
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
   dependents: []
+  UseOnly: []
 --- !u!1 &1935358772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,6 +1504,7 @@ MonoBehaviour:
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
   dependents: []
+  UseOnly: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

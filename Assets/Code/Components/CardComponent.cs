@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -34,16 +35,40 @@ namespace Assets.Code.Components
 
         //private Dictionary<string, List<SpriteWrapper>> sp = new Dictionary<string, List<SpriteWrapper>>();
 
+        public List<Sprite> UseOnly = new List<Sprite>();
+        private List<string> UseOnlyNames = new List<string>();
+
+        [Button]
+        public void ClearUseOnly()
+        {
+            UseOnly.Clear();
+            UseOnlyNames.Clear();
+        }
+
         public UniTask<bool> Prepare()
         {
             SpriteRenderer = GetComponent<SpriteRenderer>();
             var items = Resources.LoadAll(Path, typeof(Sprite));
             Sprites = new List<SpriteWrapper>();
 
+            foreach (var uo in UseOnly)
+            {
+                var path = AssetDatabase.GetAssetPath(uo);
+                FileName file = new FileName(path);
+                UseOnlyNames.Add(file.NameWithoutExt);
+            }
+
             foreach (var item in items)
             {
                 var path = AssetDatabase.GetAssetPath(item);
                 FileName file = new FileName(path);
+
+                if (UseOnly.Count > 0)
+                {
+                    if (!UseOnlyNames.Contains(file.NameWithoutExt))
+                        continue;
+                }
+
                 Sprites.Add(new()
                 {
                     FileName = file,

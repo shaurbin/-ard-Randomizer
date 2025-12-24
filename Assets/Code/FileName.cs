@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Assets.Code
 {
@@ -10,6 +11,7 @@ namespace Assets.Code
         public string NameWithoutExt;
         public string Postfix;
         public string NameOfPostfix;
+        public int Number;
 
         public FileName(string path)
         {
@@ -17,7 +19,21 @@ namespace Assets.Code
             Directories = directories[0..^1];
             Name = directories[directories.Length - 1];
             NameWithoutExt = Name.Split(".")[0];
-            
+
+            bool readNumber = false;
+            StringBuilder numberBuilder = new StringBuilder();
+            foreach (var symbol in NameWithoutExt)
+            {
+                if (Char.IsDigit(symbol) && !readNumber)
+                    readNumber = true;
+                
+                if (readNumber)
+                    numberBuilder.Append(symbol);
+            }
+
+            if (readNumber)
+                Number = Int32.Parse(numberBuilder.ToString());
+
             if (path.Contains("~"))
             {
                 string[] a = Directories[^1].Split("~");

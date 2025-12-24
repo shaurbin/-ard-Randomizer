@@ -393,7 +393,6 @@ GameObject:
   - component: {fileID: 106989977}
   - component: {fileID: 106989976}
   - component: {fileID: 106989975}
-  - component: {fileID: 106989978}
   m_Layer: 0
   m_Name: Splash_001
   m_TagString: Untagged
@@ -493,22 +492,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1597054591}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &106989978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 106989974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a2075ee6098d7145aead9fb8371eac2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Path: ATW/Sprites/Splash
-  SpriteRenderer: {fileID: 0}
-  UsedSpriteIndex: 0
-  dependents: []
 --- !u!1 &414831404
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,14 +790,12 @@ MonoBehaviour:
   SpriteRenderer: {fileID: 0}
   UsedSpriteIndex: 0
   dependents:
-  - Index: 0
-    UsedIndex: 0
-    SpriteRenderer: {fileID: 713087190}
-    Key: Shadows
-  - Index: 0
-    UsedIndex: 0
-    SpriteRenderer: {fileID: 2104799464}
-    Key: Headers
+  - SpriteRenderer: {fileID: 713087190}
+    Path: ATW/Sprites/Shadows
+  - SpriteRenderer: {fileID: 106989976}
+    Path: ATW/Sprites/Splash
+  - SpriteRenderer: {fileID: 2104799464}
+    Path: ATW/Sprites/Headers
 --- !u!212 &1087885732
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1409,7 +1390,7 @@ SpriteRenderer:
   m_Size: {x: 7.85, y: 1.26}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2136648423

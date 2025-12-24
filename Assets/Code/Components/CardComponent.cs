@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -14,7 +12,7 @@ namespace Assets.Code.Components
     {
         public string Path;
         [HideInInspector] public SpriteRenderer SpriteRenderer;
-        private List<SpriteWrapper> Sprites;
+        public List<SpriteWrapper> Sprites;
         private bool prepared;
         
         private int index;
@@ -46,42 +44,27 @@ namespace Assets.Code.Components
             {
                 var path = AssetDatabase.GetAssetPath(item);
                 FileName file = new FileName(path);
-
-                if (file.Path.Equals($"Assets/Resources/{Path}"))
+                Sprites.Add(new()
                 {
-                    Sprites.Add(new()
-                    {
-                        FileName = file,
-                        Sprite = (Sprite)item
-                    });
-                }
-                else
+                    FileName = file,
+                    Sprite = (Sprite)item
+                });
+            }
+
+            if (dependents.Count > 0)
+            {
+                foreach (var dependent in dependents)
                 {
-                    string innerFolderName = file.Directories[^1];
-                    
-                    //if (!sp.ContainsKey(innerFolderName))
-                    //{
-                    //    sp.Add(innerFolderName, new List<SpriteWrapper>());
-                    //}
-
-                    //sp[innerFolderName].Add(new()
-                    //{
-                    //    FileName = file,
-                    //    Sprite = (Sprite)item
-                    //});
-
-                    if (dependents.Count > 0)
+                    var dependentSpriteObjs = Resources.LoadAll(dependent.Path, typeof(Sprite));
+                    foreach (var dso in dependentSpriteObjs)
                     {
-                        var d = dependents.First(v => v.Key.Equals(file.Postfix));
-                        
-                        if (!d.Sprites.ContainsKey(file.NameOfPostfix))
-                            d.Sprites.Add(file.NameOfPostfix, new List<SpriteWrapper>());
-                        d.Sprites[file.NameOfPostfix].Add(new()
+                        var dpath = AssetDatabase.GetAssetPath(dso);
+                        FileName dfile = new FileName(dpath);
+                        dependent.Sprites.Add(dfile.Number, new()
                         {
-                            FileName = file,
-                            Sprite = (Sprite)item
+                            FileName = dfile,
+                            Sprite = (Sprite)dso
                         });
-                        
                     }
                 }
             }
@@ -91,89 +74,24 @@ namespace Assets.Code.Components
             return UniTask.FromResult(true);
         }
 
-        public string DependentsIndexes()
+        public void Refresh()
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (var dependent in dependents)
-            {
-                sb.Append(dependent.UsedIndex);
-            }
-            return sb.ToString();
-        }
-
-        public bool ShowDependencies()
-        {
+            index = 0;
             UsedSpriteIndex = 0;
-            if (dependents.Count > 0)
-            {
-                foreach (var dependent in dependents)
-                {
-                    if (dependent.Index > 0)
-                        dependent.UsedIndex++;
-
-                    dependent.Index++;
-                    if (dependent.Index > dependent.Sprites[Sprites[UsedSpriteIndex].FileName.NameWithoutExt].Count)
-                    {
-                        dependent.UsedIndex = 0;
-                        dependent.Index = 0;
-                        Build();
-                        return true;
-                    }
-                    Build();
-                    return true;
-                }
-            }
-            Build();
-            return true;
         }
 
-        public bool NextSprite()
-        {
-            if (finished) return false;
+        //public bool NextSprite()
+        //{
+        //    if (finished) return false;
 
-            if (dependents.Count > 0)
-            {
-                bool nextSprite = false;
-                foreach (var dependent in dependents)
-                {
-                    if (dependent.Index > 0)
-                        dependent.UsedIndex++;
-                    
-                    dependent.Index++;
-                    if (dependent.Index > dependent.Sprites[Sprites[UsedSpriteIndex].FileName.NameWithoutExt].Count)
-                    {
-                        nextSprite = true;
-                    }
-                }
+        //    if (index > 0) UsedSpriteIndex++;
 
-                if (nextSprite)
-                {
-                    UsedSpriteIndex++;
-                    index++;
-                    foreach (var dependent in dependents)
-                    {
-                        dependent.UsedIndex = 0;
-                        dependent.Index = 0;
-                    }
-                    if (index >= Sprites.Count)
-                    {
-                        finished = true;
-                        UsedSpriteIndex--;
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                if (index > 0) UsedSpriteIndex++;
-
-                index++;
-                if (index >= Sprites.Count)
-                    finished = true;
-            }
-
-            return true;
-        }
+        //    index++;
+        //    if (index >= Sprites.Count)
+        //        finished = true;
+            
+        //    return true;
+        //}
 
         public void Build()
         {
@@ -182,19 +100,35 @@ namespace Assets.Code.Components
             {
                 foreach (var dependent in dependents)
                 {
-                    dependent.SpriteRenderer.sprite = dependent.Sprites[Sprites[UsedSpriteIndex].FileName.NameWithoutExt][dependent.UsedIndex].Sprite;
+                    dependent.SpriteRenderer.sprite = dependent.Sprites[Sprites[UsedSpriteIndex].FileName.Number].Sprite;
                 }
             }
+        }
+
+        public List<Action> Setters()
+        {
+            List<Action> list = new List<Action>();
+
+            foreach (var s in Sprites)
+            {
+                Action a = () => SpriteRenderer.sprite = s.Sprite;
+                foreach (var dependent in dependents)
+                {
+                    a += () => dependent.SpriteRenderer.sprite = dependent.Sprites[s.FileName.Number].Sprite;
+                }
+
+                list.Add(a);
+            }
+
+            return list;
         }
 
         [Serializable]
         public class DependentElements
         {
-            [HideInInspector] public int Index;
-            [HideInInspector] public int UsedIndex;
             public SpriteRenderer SpriteRenderer;
-            public string Key;
-            [HideInInspector] public Dictionary<string, List<SpriteWrapper>> Sprites = new Dictionary<string, List<SpriteWrapper>>();
+            public string Path;
+            [HideInInspector] public Dictionary<int, SpriteWrapper> Sprites = new Dictionary<int, SpriteWrapper>();
         }
     }
 }

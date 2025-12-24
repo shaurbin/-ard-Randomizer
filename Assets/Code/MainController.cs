@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Assets.Code.Components;
 using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
@@ -13,7 +15,7 @@ public class MainController : MonoBehaviour
     public Card Card;
 
     [Button]
-    public void RecordShuffles()
+    public void Run()
     {
         if (Card == null)
         {
@@ -47,41 +49,34 @@ public class MainController : MonoBehaviour
         recorderController = new RecorderController(settings);
         recorderController.Settings.AddRecorderSettings(movie);
 
-        foreach (var component in Card.Components)
-        {
-            while (component.NextSprite())
-            {
-                Card.Build();
-                if (Card.UniqueView())
-                {
-                    await Record();
-                    await UniTask.Delay(1000);
-                }
-            }
-        }
+        var setters = Card.Setters();
+
+        await Shuffle(setters);
     }
 
-    [Button]
-    public async void RecordThisConfiguration()
+    private async UniTask<bool> Shuffle(List<List<Action>> array, Action[] result = null, int depth = 0)
     {
-        var settings = new RecorderControllerSettings();
-        settings.FrameRate = 60;
-        var movie = new MovieRecorderSettings();
-        movie.FrameRate = 60;
-        movie.EncodingQuality = MovieRecorderSettings.VideoEncodingQuality.High;
+        if (result == null)
+            result = new Action[array.Count];
 
-        var imageInputSettings = new RenderTextureInputSettings
+        if (depth == array.Count)
         {
-            RenderTexture = renderTexture
-        };
+            foreach (var e in result)
+                e.Invoke();
+            
+            await Record();
+            await UniTask.Delay(1000);
+            
+            return true;
+        }
 
-        movie.ImageInputSettings = imageInputSettings;
+        foreach (var a in array[depth])
+        {
+            result[depth] = a;
+            await Shuffle(array, result, depth + 1);
+        }
 
-        recorderController = new RecorderController(settings);
-        recorderController.Settings.AddRecorderSettings(movie);
-
-        await Record();
-        await UniTask.Delay(1000);
+        return true;
     }
 
     private async UniTask<bool> Record()

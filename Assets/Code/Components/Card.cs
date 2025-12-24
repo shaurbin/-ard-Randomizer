@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -33,10 +34,10 @@ namespace Assets.Code.Components
             {
                 int arg = component.UsedSpriteIndex;
                 sb.Append(arg.ToString());
-                if (component.Dependents.Count > 0)
-                {
-                    sb.Append(component.DependentsIndexes());
-                }
+                //if (component.Dependents.Count > 0)
+                //{
+                //    sb.Append(component.DependentsIndexes());
+                //}
             }
 
             //Debug.Log(sb.ToString());
@@ -57,12 +58,23 @@ namespace Assets.Code.Components
             return true;
         }
 
-        public void Build()
+        //public void Build()
+        //{
+        //    foreach (var component in Components)
+        //    {
+        //        component.Build();
+        //    }
+        //}
+
+        public List < List < Action>> Setters()
         {
+            List< List < Action >> setters = new List <List <Action>> ();
             foreach (var component in Components)
             {
-                component.Build();
+                setters.Add(component.Setters());
             }
+
+            return setters;
         }
     }
 }
